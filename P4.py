@@ -1,7 +1,4 @@
-# -------------------------------------- Jeu de puissance 4 ---------------------------------- # 
-#           Lepecheur                                                                          #
-# -------------------------------------------------------------------------------------------- # 
-
+# coding=<\xe9>
     # Interface
     
 from Tkinter import *
@@ -15,10 +12,10 @@ class Can(Canvas):
         
             #Variables
         
-        self.cases      = [] # Cases déjà remplies
+        self.cases      = [] # Cases deja remplies
         self.listerouge = [] # Liste des cases rouges
         self.listejaune = [] # Liste des cases jaunes
-        self.dgagnantes = [] # Cases déjà gagnantes et donc ne peuvent plus l"être à nouveau (cf "Continuer")
+        self.dgagnantes = [] # Cases deja gagnantes et donc ne peuvent plus l"etre a nouveau (cf "Continuer")
         self.running    = 1  # Type de partie en cours
         self.couleur    = ["Rouges", "Jaunes"]
         self.color      = ["red", "#EDEF3A"]
@@ -46,7 +43,7 @@ class Can(Canvas):
         self.create_rectangle(330,400,420,425,fill=self.clair)
         self.create_text(340, 405, text ="Nouveau jeu", anchor = NW, fill = self.fonce, font= self.police2)
         
-            #Création des cases
+            #Creation des cases
         
         self.ovals = []
         for y in range(10, 390, 55):
@@ -57,11 +54,11 @@ class Can(Canvas):
                 
         self.bind("<Button-1>", self.click)
         
-            # Pour relier à la fin les coordonnées des centres des cases
+            # Pour relier ala fin les coordonnees des centres des cases
         
         self.coordscentres = []
         
-            # Comptabilisation des suites de pièces
+            # Comptabilisation des suites de pieces
         
         self.rouges, self.jaunes = 0,0
         
@@ -80,7 +77,7 @@ class Can(Canvas):
         if 330 < event.x and 400 < event.y and event.x < 420 and event.y < 425:
             self.new()# =>Nouveau jeu
             
-            #Jeu en cours: reconnaissance de la case jouée
+            #Jeu en cours: reconnaissance de la case jouee
             
         else :
             if self.running != 0:
@@ -89,11 +86,11 @@ class Can(Canvas):
                         self.colorier(self.dictionnaire[(w, x, y, z)]) # => Jouer
 
                 
-    def colorier(self, n, nb=0): #Gère la coloration des cases
+    def colorier(self, n, nb=0): #Gere la coloration des cases
         
-        if n in self.cases : return # Une case coloriée ne peut plus changer de couleur
+        if n in self.cases : return # Une case coloriee ne peut plus changer de couleur
            
-        if n + 7 not in self.cases and n + 7 < 49: #Si la case en dessous est vide et existe, on essaie d'abord de colorier celle-là
+        if n + 7 not in self.cases and n + 7 < 49: #Si la case en dessous est vide et existe, on essaie d'abord de colorier celle-la
             self.colorier(n+7)
             
         else:
@@ -118,13 +115,13 @@ class Can(Canvas):
         return
 
     
-    def verif(self, n): # Vérifie si la pièce ajoutée s'aligne avec trois autres déjà placées
+    def verif(self, n): # verifie si la piece ajoutee s'aligne avec trois autres deja placees
         
         if self.running == 0 : return
         
-        if n in self.listerouge and n+7  in self.listerouge and n+14  in self.listerouge and n+21 in self.listerouge: # D'abbord à la verticale,
-                                                                                            # séparément car proximité d'un bord inintéressante
-            liste=[n, n+7, n+14, n+21] # Pour gérér les parties "plurigagnantes"
+        if n in self.listerouge and n+7  in self.listerouge and n+14  in self.listerouge and n+21 in self.listerouge: # D'abord a la verticale,
+                                                                                            # separement car proximite d'un bord ininteressante
+            liste=[n, n+7, n+14, n+21] # Pour gerer les parties "plurigagnantes"
             if self.gagnantes(liste) : self.win("rouges", liste[0],liste[3])
             return
         
@@ -137,7 +134,7 @@ class Can(Canvas):
         
         for x in (1,-6,8):
             
-            if n in self.listerouge: # en s'assurant qu'elles ne sont trop près des bords (pour ne pas arriver de l'autre coté du plateau)
+            if n in self.listerouge: # en s'assurant qu'elles ne sont trop pres des bords (pour ne pas arriver de l'autre cote du plateau)
                 if n % 7 != 6 and n+x in self.listerouge:
                     if n % 7 != 5 and n+ 2*x in self.listerouge:
                         if n % 7 != 4 and n + 3*x in self.listerouge:
@@ -214,13 +211,13 @@ class Can(Canvas):
     def verificationFinale(self):#Lorsque toutes les cases sont remplies
         
         if len(self.cases)==49: # On comptabilise les points
-            typ =self.plus() # Type de partie gagnée
+            typ =self.plus() # Type de partie gagnee
             if typ[1]==0:
-                self.texte2 = Label(fen, text = "Les " + typ[0] + " ont définitivement gagné !", bg= self.fonce,
+                self.texte2 = Label(fen, text = "Les " + typ[0] + " ont definitivement gagne !", bg= self.fonce,
                                     fg=self.clair, font=self.police1)
                 self.texte2.grid()
             elif typ[1]==1:
-                self.texte2 = Label(fen, text = "Les " + typ[0] + " ont gagné les premiers!", bg= self.fonce,
+                self.texte2 = Label(fen, text = "Les " + typ[0] + " ont gagne les premiers!", bg= self.fonce,
                                     fg=self.clair, font=self.police1)
                 self.texte2.grid()
             else:
@@ -228,9 +225,9 @@ class Can(Canvas):
                 self.texte2.grid(padx=110)
 
                 
-    def win(self, qui, p, d): # Partie gagnée
+    def win(self, qui, p, d): # Partie gagnee
         
-            #Marquage des pièces gagnantes
+            #Marquage des pieces gagnantes
         
         self.create_line(self.coordscentres[p][0], self.coordscentres[p][1],
                          self.coordscentres[d][0], self.coordscentres[d][1],
@@ -247,7 +244,7 @@ class Can(Canvas):
             #Affichage des scores
         
         self.qui = qui
-        self.texte = Label(fen, text="Les %s ont gagné !" % (qui), bg= self.fonce, fg=self.clair, font=self.police1)
+        self.texte = Label(fen, text="Les %s ont gagne !" % (qui), bg= self.fonce, fg=self.clair, font=self.police1)
         self.texte.grid()
         self.running = 0
         
@@ -258,7 +255,7 @@ class Can(Canvas):
         self.BtnContinuer.grid(padx=120)
 
         
-    def continuer(self): # Si on choisi de poursuivre la même partie (déjà gagnée par un joueur)
+    def continuer(self): # Si on choisi de poursuivre la meme partie (deja gagnee par un joueur)
         
         self.running = 3
         
@@ -275,7 +272,7 @@ class Can(Canvas):
         self.pJaunes.grid(padx=160)
 
         
-    def gagnantes(self, liste=[]): # On vérifie que les pièces ne sont pas encore gagnantes, et on les ajoute dans la liste si elles le deviennent
+    def gagnantes(self, liste=[]): # On verifie que les pieces ne sont pas encore gagnantes, et on les ajoute dans la liste si elles le deviennent
 
         for i in liste:
             if i in self.dgagnantes: return 0
@@ -286,18 +283,18 @@ class Can(Canvas):
         return 1
 
     
-    def plus(self): # Donner le résultat final
+    def plus(self): # Donner le resultat final
         
         if self.rouges > self.jaunes    : return "Rouges",0
         if self.jaunes > self.rouges    : return "Jaunes",0
-        if self.rouges != 0             : return self.qui, 1 # En cas d'égalité, le premier à avoir aligné ses pièces gagne
+        if self.rouges != 0             : return self.qui, 1 # En cas d'egalite, le premier a avoir aligne ses pieces gagne
 
-        return "Personne n'a gagné", 2 #Sinon, tous deux ont perdu
+        return "Personne n'a gagne", 2 #Sinon, tous deux ont perdu
 
 
     def new(self):# Nouveau Jeu
         
-            # Opérations non certaines
+            # Operations non certaines
         
         try:
             self.BtnContinuer.destroy()
@@ -320,7 +317,7 @@ class Can(Canvas):
         except:
             pass
             
-            # Opérations qui le sont
+            # Operations qui le sont
             
         self.destroy()
         self.__init__()
