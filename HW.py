@@ -2,10 +2,14 @@
 
 print("Premier programme : ")
 
-a = -1
-while(not(a > 0 and a < 100)):
-	a = input("Saisissez un chiffre entre 0 et 100 :")
-
-
-
+a = 0
+while(a < 20):
+	b = input("Saisissez un chiffre :")
+	if(b == 5):
+		break
+	elif(b == 6):
+		continue
+	a += 1
+	print(a)
+print = 3
 print("Merci")
