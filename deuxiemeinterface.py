@@ -1,6 +1,7 @@
 
 from Tkinter import *
 import ttk
+import p4_rsc as motor
 
 #Game dimensions
 WDTH = 700
@@ -17,6 +18,12 @@ HGTH_F2 = HGTH - NB_ROW*(HGTH / (NB_ROW + 1))
 #Columns dimensions
 WDTH_COL = WDTH_F1 / NB_COL
 HGTH_COL = HGTH_F1
+
+
+PLAYER_COLOR = ['red','yellow']
+
+
+current_player = 0
 
 
 root = Tk()
@@ -40,6 +47,7 @@ columns = []
 for i in range(NB_COL):
 	columns.append(Canvas(frame1, width = WDTH_COL, height = HGTH_COL, background = "blue")) #TODO: COLOR CONSTANT
 	columns[i].grid(column = i, row = 0)
+	
 
 #Draw the circles
 offset = WDTH_COL / 20
@@ -51,8 +59,29 @@ columns_grid = [ [ columns[j].create_oval(offset, i*HGTH_CASE + offset,
 
 
 
+def changecolor(canvas, player, row):
+	canvas.itemconfig(columns_grid[row][0], fill = PLAYER_COLOR[player])
 
-columns[0].itemconfig(columns_grid[0][0], fill='red')
+
+
+
+def event_player(event):
+
+	column = event.widget.winfo_x()/WDTH_COL #winfo_x returns the upper left x coordinate relative to the upper 
+	ligne, goodMove = motor.playMove(column)
+	global current_player
+	print 
+	if goodMove:								#left corner of its parent
+		changecolor(event.widget, current_player, ligne)
+		current_player = (current_player + 1) % 2
+
+for i in range(NB_COL):
+	columns[i].bind("<Button-1>", event_player)
+
+
+
+
+
 
 
 root.mainloop()
