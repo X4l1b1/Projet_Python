@@ -8,15 +8,22 @@ gagnant = -1
 currentplayer = 0
 symboles = ["X", "O"]
 
-
-
 grille =[ ["-" for x in range (largeur)] for y in range (hauteur)]
+
+def reset():
+	printgrille()
+	for x in range (hauteur):
+		for y in range(largeur):
+			grille[x][y] = "-"
+	printgrille()
 
 
 
 def playMove(colonne):
+	global currentplayer
 	ligne = -1
 	goodMove = False
+	currentplayer = (currentplayer + 1) % 2
 #grille(2,1)= deuxième colone troisième ligne
 	for y in range (hauteur):
 		if (grille[hauteur -1 - y][colonne] == "-"):
@@ -27,6 +34,7 @@ def playMove(colonne):
 					continue
 	if goodMove:
 		grille [ligne][colonne] = symboles[currentplayer]
+	
 	return ligne, goodMove
 
 
