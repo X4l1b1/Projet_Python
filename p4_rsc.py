@@ -1,30 +1,50 @@
 # -*-coding:Latin-1 -*
+'''
+    File name: p4_rsc.py
+    Author: Roman Devuyst
+    Date created: 16/03/2017
+    Date last modified: 17/05/2017
+    Python Version: 2.7
+    Purpose: This file contains the motor functions of the game Puissance4
+'''
+###################### Contstants and Global Variables ##############################
 
-
+###### Game dimensions ######
 largeur = 7
 hauteur = 6
+
+##### Global variables #####
 moves = 0
 gagnant = -1
 currentplayer = 0
 symboles = ["X", "O"]
 
+#Initialisation of the game's grid
 grille =[ ["-" for x in range (largeur)] for y in range (hauteur)]
 
+
 def reset():
-	printgrille()
+	""" Method which sets the game's board array to its initial values and the currentplayer to '0'
+ 	"""
 	for x in range (hauteur):
 		for y in range(largeur):
 			grille[x][y] = "-"
-	printgrille()
+	currentplayer = 0
 
 
 
 def playMove(colonne):
+	""" Method which, given a column index, checks wether :
+				- the index is not out of bounds
+				- the column isn't full
+		if so, it fills the first valid element of the board with the current player's symbol
+		updates current player's value
+		returns anyway the move's row and validity
+ 	"""
 	global currentplayer
 	ligne = -1
 	goodMove = False
 	currentplayer = (currentplayer + 1) % 2
-#grille(2,1)= deuxième colone troisième ligne
 	for y in range (hauteur):
 		if (grille[hauteur -1 - y][colonne] == "-"):
 			goodMove = True
@@ -40,6 +60,9 @@ def playMove(colonne):
 
 
 def checkLigne(ligne,colonne):
+	""" Checks wether the given square coordinate's row contains a winning move
+		returns the answer
+ 	"""
 	adjacent = 0
 	for x in range (3):
 		if(colonne + x + 1 < largeur):
@@ -58,7 +81,10 @@ def checkLigne(ligne,colonne):
 	else:
 		return False
 
-def checkColone(ligne,colonne):
+def checkColonne(ligne,colonne):
+	""" Checks wether the given square coordinate's column contains a winning move
+		returns the answer
+ 	"""
 	adjacent = 0
 	for x in range (3):
 		if(ligne + x + 1 < hauteur):
@@ -79,6 +105,9 @@ def checkColone(ligne,colonne):
 				
 
 def checkDiagAsc(ligne,colonne):
+	""" Checks wether the given square coordinate's diagonal (from bottom left to top right) contains a winning move
+		returns the answer
+ 	"""
 	adjacent = 0 
 	for x in range (3):
 		if (ligne + x + 1 < hauteur) and (colonne - x - 1 >= 0):
@@ -98,6 +127,9 @@ def checkDiagAsc(ligne,colonne):
 		return False
 
 def checkDiagDesc(ligne,colonne):
+	""" Checks wether the given square coordinate's diagonal (from top left to bottom right) contains a winning move
+		returns the answer
+ 	"""
 	adjacent = 0
 	for x in range (3):
 		if(ligne + x + 1 < hauteur) and (colonne + x + 1 < largeur):
@@ -118,7 +150,10 @@ def checkDiagDesc(ligne,colonne):
 
 
 def checkWinner(ligne,colonne):
-	if(checkColone(ligne, colonne)):
+	""" Checks wether the given square coordinate's is part of a winning move
+		returns the answer
+ 	"""
+	if(checkColonne(ligne, colonne)):
 		return True
 	elif(checkLigne(ligne,colonne)):
 		return True
@@ -128,7 +163,9 @@ def checkWinner(ligne,colonne):
 		return checkDiagDesc(ligne,colonne)
 
 def printgrille():
-	#grille(2,1)= deuxième colone troisième ligne
+	""" Prints the game's grid and the current player in terminal
+		NOTE: Used for debug
+ 	"""
 	for x in range (hauteur):
 		print ( str(x) + " " + str(grille[x]))
 	
