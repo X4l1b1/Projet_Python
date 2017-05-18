@@ -38,13 +38,10 @@ def playMove(colonne):
 				- the index is not out of bounds
 				- the column isn't full
 		if so, it fills the first valid element of the board with the current player's symbol
-		updates current player's value
 		returns anyway the move's row and validity
  	"""
-	global currentplayer
 	ligne = -1
 	goodMove = False
-	currentplayer = (currentplayer + 1) % 2
 	for y in range (hauteur):
 		if (grille[hauteur -1 - y][colonne] == "-"):
 			goodMove = True
@@ -54,7 +51,7 @@ def playMove(colonne):
 					continue
 	if goodMove:
 		grille [ligne][colonne] = symboles[currentplayer]
-	
+
 	return ligne, goodMove
 
 
@@ -131,7 +128,7 @@ def checkDiagDesc(ligne,colonne):
 		returns the answer
  	"""
 	adjacent = 0
-	for x in range (3):
+	for x in range (3): 
 		if(ligne + x + 1 < hauteur) and (colonne + x + 1 < largeur):
 			if grille[ligne + x + 1][colonne + x + 1] == symboles[currentplayer]:
 				adjacent += 1
@@ -150,16 +147,21 @@ def checkDiagDesc(ligne,colonne):
 
 
 def checkWinner(ligne,colonne):
-	""" Checks wether the given square coordinate's is part of a winning move
+	""" Checks wether the given square coordinate's is part of a winning move and updates currentplayer
 		returns the answer
  	"""
+ 	global currentplayer
 	if(checkColonne(ligne, colonne)):
+		currentplayer = (currentplayer + 1) % 2 # change de joueur après verif de jouer pour que checkWinner soit fait avec le bon symbole
 		return True
 	elif(checkLigne(ligne,colonne)):
+		currentplayer = (currentplayer + 1) % 2 # change de joueur avant de jouer pour que checkWinner soit fait avec le bon symbole
 		return True
 	elif (checkDiagAsc(ligne,colonne)):
+		currentplayer = (currentplayer + 1) % 2 # change de joueur avant de jouer pour que checkWinner soit fait avec le bon symbole
 		return True
 	else:
+		currentplayer = (currentplayer + 1) % 2 # change de joueur avant de jouer pour que checkWinner soit fait avec le bon symbole
 		return checkDiagDesc(ligne,colonne)
 
 def printgrille():
