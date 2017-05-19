@@ -154,7 +154,7 @@ def event_player(event):
 	global current_player
 	global done
 	if not done :
-		column = event.widget.winfo_x()/WDTH_COLM 	#winfo_x returns the upper left x coordinate relative to the upper 
+		column = event.widget.winfo_x()/WDTH_COL 	#winfo_x returns the upper left x coordinate relative to the upper 
 		ligne, goodMove = motor.playMove(column)
 	
 		if goodMove:								#left corner of its parent
